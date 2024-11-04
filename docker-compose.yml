@@ -6,55 +6,45 @@ services:
       context: ./user-service
     environment:
       - PYTHONPATH=/app
-      - DATABASE_URL=postgresql://user:password@db/user_db
+      - DATABASE_URL=sqlite:////data/sqlite_user.db  # Use SQLite and a path within the volume
     ports:
-      - "8001:8000"  # Make sure this appears only once
-    depends_on:
-      - db
+      - "8001:8000"
+    volumes:
+      - user_data:/data  # Persistent volume for user service
 
   transaction-service:
     build:
       context: ./transaction-service
     environment:
       - PYTHONPATH=/app
-      - DATABASE_URL=postgresql://user:password@db/transaction_db
+      - DATABASE_URL=sqlite:////data/sqlite_transaction.db  # Use SQLite and a path within the volume
     ports:
-      - "8002:8000"  # Ensure no duplicate here
-    depends_on:
-      - db
-
-  notification-service:
-    build:
-      context: ./notification-service
-    environment:
-      - PYTHONPATH=/app
-      - DATABASE_URL=postgresql://user:password@db/notification_db
-    ports:
-      - "8003:8000"  # No duplicates here as well
-    depends_on:
-      - db
-
-  frontend:
-    build:
-      context: ./frontend  
-    ports:
-      - "3000:3000"  
-    depends_on:
-      - user-service
-      - transaction-service
-      - notification-service
-
-  db:
-    image: postgres:13
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: user_db
-    ports:
-      - "5432:5432"
+      - "8002:8000"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./dummy_data.sql:/docker-entrypoint-initdb.d/dummy_data.sql
+      - transaction_data:/data  # Persistent volume for transaction service
+
+  # notification-service:
+  #   build:
+  #     context: ./notification-service
+  #   environment:
+  #     - PYTHONPATH=/app
+  #     - DATABASE_URL=sqlite:////data/sqlite_notification.db  # Use SQLite and a path within the volume
+  #   ports:
+  #     - "8003:8000"
+  #   volumes:
+  #     - notification_data:/data  # Persistent volume for notification service
+
+  # frontend:
+  #   build:
+  #     context: ./frontend  
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - user-service
+      # - transaction-service
+      # - notification-service
 
 volumes:
-  postgres_data:
+  user_data:  # Volume for user service data
+  transaction_data:  # Volume for transaction service data
+  notification_data:  # Volume for notification service data

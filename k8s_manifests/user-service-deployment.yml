@@ -19,16 +19,17 @@ spec:
         - containerPort: 8000  # Internal container port
         env:
         - name: ALLOWED_ORIGINS
-          value: "http://localhost:3000,http://34.42.12.23"  # Add the LoadBalancer IP
+          value: "http://localhost:3000,http://frontend:80"  # Use service name for internal communication
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: user-service
 spec:
-  type: ClusterIP
+  type: LoadBalancer  # Changed from ClusterIP to LoadBalancer to expose the service externally
   selector:
     app: user-service
   ports:
-  - port: 8001          # External port within the cluster
+  - port: 8001          # External port for the service
     targetPort: 8000     # Internal container port
