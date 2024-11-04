@@ -19,11 +19,20 @@ spec:
         - containerPort: 3000  
         env:
         - name: REACT_APP_USER_SERVICE_URL
-          value: "http://user-service:8001"
+          valueFrom:
+            configMapKeyRef:
+              name: frontend-config
+              key: REACT_APP_USER_SERVICE_URL
         - name: REACT_APP_TRANSACTION_SERVICE_URL
-          value: "http://transaction-service:8002" 
+          valueFrom:
+            configMapKeyRef:
+              name: frontend-config
+              key: REACT_APP_TRANSACTION_SERVICE_URL
         - name: REACT_APP_NOTIFICATION_SERVICE_URL
-          value: "http://notification-service:8003" 
+          valueFrom:
+            configMapKeyRef:
+              name: frontend-config
+              key: REACT_APP_NOTIFICATION_SERVICE_URL
 ---
 apiVersion: v1
 kind: Service

@@ -18,16 +18,18 @@ spec:
         ports:
         - containerPort: 8000  # Internal container port
         env:
-        - name: ALLOWED_ORIGINS
-          value: "http://localhost:3000,http://frontend:80"  # Use service name for internal communication
-
+          - name: ALLOWED_ORIGINS
+            valueFrom:
+              configMapKeyRef:
+                name: user-service-config
+                key: ALLOWED_ORIGINS
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: user-service
 spec:
-  type: LoadBalancer  # Changed from ClusterIP to LoadBalancer to expose the service externally
+  type: LoadBalancer
   selector:
     app: user-service
   ports:

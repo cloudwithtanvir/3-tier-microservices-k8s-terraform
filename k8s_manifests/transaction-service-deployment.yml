@@ -12,7 +12,44 @@ spec:
       labels:
         app: transaction-service
     spec:
+      containers:apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: transaction-service
+  template:
+    metadata:
+      labels:
+        app: transaction-service
+    spec:
       containers:
+      - name: transaction-service
+        image: gcr.io/devops-demo-440509/transaction-service:latest
+        ports:
+        - containerPort: 8000  # Internal container port
+        env:
+          - name: ALLOWED_ORIGINS
+            valueFrom:
+              configMapKeyRef:
+                name: transaction-service-config
+                key: ALLOWED_ORIGINS
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: transaction-service
+  ports:
+  - port: 8002          # External port for the service
+    targetPort: 8000     # Internal container port
+
       - name: transaction-service
         image: gcr.io/devops-demo-440509/transaction-service:latest
         ports:

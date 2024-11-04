@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  REACT_APP_USER_SERVICE_URL: "http://user-service:8001"
+  REACT_APP_TRANSACTION_SERVICE_URL: "http://transaction-service:8002"
+  REACT_APP_NOTIFICATION_SERVICE_URL: "http://notification-service:8003"

@@ -19,14 +19,17 @@ spec:
         - containerPort: 8000  
         env:
           - name: ALLOWED_ORIGINS
-            value: "http://localhost:3000,http://frontend:80"  # Use service name for internal communication
+            valueFrom:
+              configMapKeyRef:
+                name: notification-service-config
+                key: ALLOWED_ORIGINS
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: notification-service
 spec:
-  type: LoadBalancer  # Changed from ClusterIP to LoadBalancer
+  type: LoadBalancer
   selector:
     app: notification-service
   ports:
