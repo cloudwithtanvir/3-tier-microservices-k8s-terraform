@@ -1,0 +1,5 @@
+# Ignore specific Terraform JSON file
+devops-demo-440509-98a99ba0bd23.json
+
+# Ignore the entire .terraform directory
+.terraform/
