@@ -34,3 +34,8 @@ def read_transaction(transaction_id: int, db: Session = Depends(get_db)):
     if transaction is None:
         raise HTTPException(status_code=404, detail="Transaction not found")
     return transaction
+
+@router.get("/transactions/", response_model=list[TransactionResponse])
+def read_transactions(db: Session = Depends(get_db)):
+    transactions = db.query(Transaction).all()  # Fetch all transactions
+    return transactions

@@ -1,55 +1,23 @@
 /* src/components/ServiceStatus.css */
 
-.service-status-container {
-    padding: 20px;
-    border: 1px solid #ccc; /* Add border for container */
-    border-radius: 8px; /* Rounded corners */
-    background-color: #f9f9f9; /* Light background */
-    max-width: 600px; /* Limit width */
-    margin: 20px auto; /* Center the container */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-h2 {
-    text-align: center; /* Center header */
-}
-
-.service-status-table {
-    width: 100%; /* Full width */
-    border-collapse: collapse; /* Collapse borders */
-    margin-top: 15px; /* Space above table */
-}
-
-th, td {
-    border: 1px solid #ccc; /* Border for table cells */
-    padding: 10px; /* Cell padding */
-    text-align: left; /* Left-align text */
-}
-
-th {
-    background-color: #f2f2f2; /* Light gray for header */
-}
-
-.status-running {
-    background-color: #e0ffe0; /* Light green for running */
-    color: #388e3c; /* Dark green text */
-}
-
-.status-error {
-    background-color: #ffe0e0; /* Light red for error */
-    color: #d32f2f; /* Dark red text */
-}
-
-.status-unknown {
-    background-color: #fff3cd; /* Light yellow for unknown */
-    color: #856404; /* Dark yellow text */
-}
-
-.health-link, .service-link {
-    color: blue; /* Link color */
-    text-decoration: underline; /* Underline the link */
-}
-
-.health-link:hover, .service-link:hover {
-    text-decoration: none; /* Remove underline on hover */
-}
+.service-status {
+    margin-top: 1rem;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+  }
+  
+  .success-message {
+    color: #2e7d32;
+    background-color: #e8f5e9;
+    padding: 0.75rem;
+    border-radius: 5px;
+  }
+  
+  .error-message {
+    color: #c62828;
+    background-color: #ffebee;
+    padding: 0.75rem;
+    border-radius: 5px;
+  }
+  

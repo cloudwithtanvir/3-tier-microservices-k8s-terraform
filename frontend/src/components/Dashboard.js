@@ -2,12 +2,13 @@
 
 import React from 'react';
 import ServiceStatus from './ServiceStatus';
+import Navbar from './Navbar';
 
 const Dashboard = () => {
     return (
         <div>
-            <h1>Dashboard</h1>
-            <ServiceStatus />
+            <h1>Menu</h1>
+            <navigator/>
             {/* You can add other dashboard-related components or information here */}
         </div>
     );

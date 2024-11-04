@@ -16,19 +16,20 @@ spec:
       - name: notification-service
         image: gcr.io/devops-demo-440509/notification-service:latest
         ports:
-        - containerPort: 8000  # Match the internal port used in Docker Compose
-      env:
-        - name: ALLOWED_ORIGINS
-          value: "http://localhost:3000,http://34.42.12.23"  # Add the LoadBalancer IP
-        
-
+        - containerPort: 8000  
+        env:
+          - name: ALLOWED_ORIGINS
+            valueFrom:
+              configMapKeyRef:
+                name: notification-service-config
+                key: ALLOWED_ORIGINS
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: notification-service
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: notification-service
   ports:

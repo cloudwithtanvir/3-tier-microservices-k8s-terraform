@@ -13,8 +13,8 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     password = Column(String)
 
-    def set_password(self, plain_password: str):
-        self.password = pwd_context.hash(plain_password)
+    # def set_password(self, plain_password: str):
+    #     self.password = pwd_context.hash(plain_password)
 
-    def verify_password(self, plain_password: str):
-        return pwd_context.verify(plain_password, self.password)
+    # def verify_password(self, plain_password: str):
+    #     return pwd_context.verify(plain_password, self.password)

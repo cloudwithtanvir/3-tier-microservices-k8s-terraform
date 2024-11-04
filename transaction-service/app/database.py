@@ -1,23 +1,16 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
-from typing import Generator
+from sqlalchemy.orm import sessionmaker
+import os
 
-# Database URL configuration based on your docker-compose setup
-DATABASE_URL = "postgresql://user:password@db/user_db"
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./sqlite_transaction.db")
 
-# Create the SQLAlchemy engine
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
-
-# Create a session local class
+engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-# Create a base class for the declarative models
 Base = declarative_base()
 
-# Dependency to get the database session
-def get_db() -> Generator:
-    db: Session = SessionLocal()
+def get_db():
+    db = SessionLocal()
     try:
         yield db
     finally:
