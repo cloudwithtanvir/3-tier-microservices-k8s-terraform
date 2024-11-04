@@ -1,5 +1,4 @@
 // src/components/ServiceStatus.js
-
 import React, { useEffect, useState } from 'react';
 import './ServiceStatus.css'; // Assuming you create a separate CSS file for styling
 
@@ -14,9 +13,10 @@ const ServiceStatus = () => {
     useEffect(() => {
         const checkServiceStatus = async () => {
             try {
-                const userResponse = await fetch('http://localhost:8001/api/health');
-                const transactionResponse = await fetch('http://localhost:8002/api/health');
-                const notificationResponse = await fetch('http://localhost:8003/api/health');
+                // Fetch service health check endpoints using environment variables
+                const userResponse = await fetch(`${process.env.REACT_APP_USER_SERVICE_URL}/api/health`);
+                const transactionResponse = await fetch(`${process.env.REACT_APP_TRANSACTION_SERVICE_URL}/api/health`);
+                const notificationResponse = await fetch(`${process.env.REACT_APP_NOTIFICATION_SERVICE_URL}/api/health`);
 
                 // Check if the responses are OK (status code 200)
                 const userStatus = userResponse.ok ? 'running' : 'OFF';
@@ -52,11 +52,11 @@ const ServiceStatus = () => {
     const createServiceLink = (serviceName) => {
         switch (serviceName) {
             case 'userService':
-                return 'http://localhost:8001'; // Replace with the actual URL for User Service UI
+                return process.env.REACT_APP_USER_SERVICE_URL; // Use environment variable
             case 'transactionService':
-                return 'http://localhost:8002'; // Replace with the actual URL for Transaction Service UI
+                return process.env.REACT_APP_TRANSACTION_SERVICE_URL; // Use environment variable
             case 'notificationService':
-                return 'http://localhost:8003'; // Replace with the actual URL for Notification Service UI
+                return process.env.REACT_APP_NOTIFICATION_SERVICE_URL; // Use environment variable
             default:
                 return '#';
         }
