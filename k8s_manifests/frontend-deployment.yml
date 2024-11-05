@@ -1,9 +1,21 @@
+# ConfigMap for frontend environment variables
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  REACT_APP_USER_SERVICE_URL: "http://35.193.116.129:8001"           # user-service external IP
+  REACT_APP_TRANSACTION_SERVICE_URL: "http://35.238.1.195:8002"      # transaction-service external IP
+  REACT_APP_NOTIFICATION_SERVICE_URL: "http://34.69.25.61:8003"      # notification-service external IP
+
+---
+# Deployment for frontend
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -14,7 +26,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: gcr.io/devops-demo-440509/frontend:latest
+        image: gcr.io/devops-demo-440509/frontend:latest  # Specify your Docker image
         ports:
         - containerPort: 3000
         env:
@@ -33,3 +45,17 @@ spec:
             configMapKeyRef:
               name: frontend-config
               key: REACT_APP_NOTIFICATION_SERVICE_URL
+
+---
+# LoadBalancer Service for frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: LoadBalancer  # Use LoadBalancer to expose frontend to the internet
+  ports:
+    - port: 80        # External port
+      targetPort: 3000  # Internal container port
+  selector:
+    app: frontend
