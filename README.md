@@ -1,10 +1,4 @@
-Here's an updated README with the requested details, including the addition of continuous integration (CI) and continuous deployment (CD) pipelines, infrastructure setup using Terraform, managed secrets, and screenshots for the application's services, pods, and frontend dashboard. This README also emphasizes that this is a sample application for educational and testing purposes.
-
----
-
-# 3-Tier Finance Application
-
-## Overview
+# 3-Tier Finance Applicatio## Overview
 
 The 3-Tier Finance Application is a microservices-based application designed to provide a seamless experience for managing financial transactions. This sample app includes three primary services: User Service, Transaction Service, and Notification Service, along with a Frontend that allows users to interact with the backend services. This application is developed and deployed using Docker and Kubernetes, with Google Cloud Platform (GCP) as the cloud provider.
 
