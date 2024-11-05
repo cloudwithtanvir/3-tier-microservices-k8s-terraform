@@ -1,4 +1,4 @@
-# 3-Tier Finance Applicatio
+# 3-Tier Finance Application
 
 ## Overview
 
