@@ -16,7 +16,7 @@ spec:
       - name: frontend
         image: gcr.io/devops-demo-440509/frontend:latest
         ports:
-        - containerPort: 3000  
+        - containerPort: 3000
         env:
         - name: REACT_APP_USER_SERVICE_URL
           valueFrom:
@@ -33,15 +33,3 @@ spec:
             configMapKeyRef:
               name: frontend-config
               key: REACT_APP_NOTIFICATION_SERVICE_URL
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-spec:
-  type: LoadBalancer  
-  selector:
-    app: frontend
-  ports:
-  - port: 80                 # External port (HTTP)
-    targetPort: 3000         # Internal container port
