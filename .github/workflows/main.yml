@@ -28,7 +28,12 @@ jobs:
         docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/notification-service:latest ./notification-service
         docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/transaction-service:latest ./transaction-service
         docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-service:latest ./user-service
-        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/frontend:latest ./frontend
+        # Build the frontend service with environment variables
+        docker build \
+          --build-arg REACT_APP_USER_SERVICE_URL=http://nginx/api/user \
+          --build-arg REACT_APP_TRANSACTION_SERVICE_URL=http://nginx/api/transaction \
+          --build-arg REACT_APP_NOTIFICATION_SERVICE_URL=http://nginx/api/notification \
+          -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/frontend:latest ./frontend
 
     - name: Push Docker Images
       run: |
