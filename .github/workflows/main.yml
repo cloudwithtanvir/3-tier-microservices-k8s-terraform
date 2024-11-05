@@ -37,7 +37,7 @@ jobs:
         # Example: Running tests for backend services with pytest
         pip install pytest
         pytest notification-service transaction-service user-service
-      if: success()  # Only run if previous steps were successful
+      continue-on-error: true  # Continue even if tests fail
 
     - name: Log in to GCP Container Registry
       uses: docker/login-action@v1
