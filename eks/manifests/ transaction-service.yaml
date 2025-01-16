@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: transaction-service
+  template:
+    metadata:
+      labels:
+        app: transaction-service
+    spec:
+      containers:
+      - name: transaction-service
+        image: <ECR-TRANSACTION-SERVICE-IMAGE-URL>
+        ports:
+        - containerPort: 8000
+        env:
+        - name: ALLOWED_ORIGINS
+          value: "http://localhost:3000,http://frontend"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-service
+spec:
+  type: ClusterIP
+  selector:
+    app: transaction-service
+  ports:
+  - port: 8002
+    targetPort: 8000
